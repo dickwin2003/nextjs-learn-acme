@@ -128,7 +128,35 @@ export async function fetchFilteredInvoices(
     throw new Error('Failed to fetch invoices.');
   }
 }
+//add by lws
+export async function fetchFilteredCustomer(
+  query: string,
+  currentPage: number,
+) {
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
+  try {
+    const customers = await sql<CustomersTable>`
+      SELECT
+        a.id,
+        a.name,
+        a.email,
+        a.image_url
+      FROM 
+      customers a
+      WHERE
+        a.name ILIKE ${`%${query}%`} OR
+        a.email ILIKE ${`%${query}%`}
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return customers.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices.');
+  }
+}
 export async function fetchInvoicesPages(query: string) {
   noStore();
   try {

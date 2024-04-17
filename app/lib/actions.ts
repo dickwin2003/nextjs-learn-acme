@@ -22,6 +22,7 @@ const FormSchema = z.object({
 });
  
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
+//const CreateCustomer = FormSchema.omit({ id: true, date: true });
 export type State = {
   errors?: {
     customerId?: string[];
@@ -64,6 +65,44 @@ export async function createInvoice(prevState: State, formData: FormData) {
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
 }
+//add by lws
+export async function createCustomer(prevState: State, formData: FormData) {
+  //const validatedFields = CreateCustomer.safeParse({
+  //  name: formData.get('name'),
+  //  email: formData.get('email'),
+  //  image_url: formData.get('image_url'),
+  //});
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  //if (!validatedFields.success) {
+   // return {
+  //    errors: validatedFields.error.flatten().fieldErrors,
+ //     message: 'Missing Fields. Failed to Create Invoice.',
+ //   };
+//  }
+ 
+  // Prepare data for insertion into the database
+ // const { name, email,image_url } = validatedFields.data;
+ // const amountInCents = amount * 100;
+ // const date = new Date().toISOString().split('T')[0];
+  var name= formData.get('name');
+  var email=formData.get('email');
+  var image_url=formData.get('image_url');
+  try {
+    await sql`
+      INSERT INTO customers (id, name, email, image_url)
+      VALUES (uuid_generate_v4(), ${name}, ${email}, ${image_url})
+    `;
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to Create customers.',
+    };
+  }
+
+  revalidatePath('/dashboard/customers');
+  redirect('/dashboard/customers');
+}
+
 
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 export async function updateInvoice(id: string, prevState: State, formData: FormData) {
