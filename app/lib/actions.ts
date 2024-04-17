@@ -85,13 +85,13 @@ export async function createCustomer(prevState: State, formData: FormData) {
  // const { name, email,image_url } = validatedFields.data;
  // const amountInCents = amount * 100;
  // const date = new Date().toISOString().split('T')[0];
-  var name= formData.get('name');
+  var names= formData.get('name');
   var email=formData.get('email');
   var image_url=formData.get('image_url');
   try {
     await sql`
       INSERT INTO customers (id, name, email, image_url)
-      VALUES (uuid_generate_v4(), ${name}, ${email}, ${image_url})
+      VALUES (uuid_generate_v4(), ${names}, ${email}, ${image_url})
     `;
   } catch (error) {
     return {
