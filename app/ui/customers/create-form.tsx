@@ -38,14 +38,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             </div>
           </div>
         </div>
-        <div id="customer-error" aria-live="polite" aria-atomic="true">
-          {state.errors?.name &&
-            state.errors.name.map((error: string) => (
-              <p className="mt-2 text-sm text-red-500" key={error}>
-                {error}
-              </p>
-            ))}
-        </div>
 
         {/* Invoice Amount */}
         <div className="mb-4">
@@ -65,14 +57,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               />
             </div>
           </div>
-        </div>
-        <div id="amount-error" aria-live="polite" aria-atomic="true">
-          {state.errors?.email &&
-            state.errors.email.map((error: string) => (
-              <p className="mt-2 text-sm text-red-500" key={error}>
-                {error}
-              </p>
-            ))}
         </div>
 
         {/* Invoice Status */}
