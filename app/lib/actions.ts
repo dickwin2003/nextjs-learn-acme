@@ -85,9 +85,9 @@ export async function createCustomer(prevState: State, formData: FormData) {
  // const { name, email,image_url } = validatedFields.data;
  // const amountInCents = amount * 100;
  // const date = new Date().toISOString().split('T')[0];
-  const names: string = formData.get('name') as File;
-  const email: string =formData.get('email') as File;
-  const image_url: string =formData.get('image_url') as File;
+  const names: string = formData.get('name') as string;
+  const email: string =formData.get('email') as string;
+  const image_url: string =formData.get('image_url') as string;
   try {
     await sql`
       INSERT INTO customers (id, name, email, image_url)
