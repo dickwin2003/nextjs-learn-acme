@@ -91,7 +91,7 @@ export async function createCustomer(prevState: State, formData: FormData) {
   try {
     await sql`
       INSERT INTO customers (id, name, email, image_url)
-      VALUES (uuid_generate_v4(), ${name}, ${email}, ${image_url})
+      VALUES (uuid_generate_v4(), ${names}, ${email}, ${image_url})
     `;
   } catch (error) {
     return {
