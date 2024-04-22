@@ -85,13 +85,13 @@ export async function createCustomer(prevState: State, formData: FormData) {
  // const { name, email,image_url } = validatedFields.data;
  // const amountInCents = amount * 100;
  // const date = new Date().toISOString().split('T')[0];
-  const names: string = formData.get('name') as string;
-  const email: string =formData.get('email') as string;
-  const image_url: string =formData.get('image_url') as string;
+  var name= formData.get('name');
+  var email=formData.get('email');
+  var image_url=formData.get('image_url');
   try {
     await sql`
       INSERT INTO customers (id, name, email, image_url)
-      VALUES (uuid_generate_v4(), ${names}, ${email}, ${image_url})
+      VALUES (uuid_generate_v4(), ${name}, ${email}, ${image_url})
     `;
   } catch (error) {
     return {
@@ -144,6 +144,15 @@ export async function deleteInvoice(id: string) {
     return { message: 'Deleted Invoice.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Invoice.' };
+  }
+}
+export async function deleteCustomer(id: string) {
+  try {
+    await sql`DELETE FROM customers WHERE id = ${id}`;
+    revalidatePath('/dashboard/customers');
+    return { message: 'Deleted Customer.' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Customer.' };
   }
 }
 
