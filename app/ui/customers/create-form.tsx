@@ -91,7 +91,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               aria-describedby="customer-error"
             >
               <option value="" disabled>
-                Select a customer's image as pic
+                Select a customers image as pic
               </option>
               {customers.map((customer) => (
                 <option key={customer.id} value={customer.image_url}>
